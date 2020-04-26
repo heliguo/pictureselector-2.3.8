@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+apply plugin: 'maven'//maven插件，用来上传
+//apply plugin: 'signing'//签名插件
+//signing {//若是正式版本或者上传时，签名
+//    required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }
+//    sign configurations.archives
+//}
+
+uploadArchives {//上传配置
+    configuration = configurations.archives
+    repositories.mavenDeployer {
+//        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }// 上传之判断是否签名
+        repository(url: 'http://101.200.79.97:8081/repository/maven-releases/') {//仓库地址
+            authentication(userName: "0",//用户名
+                    password: "0")//密码
+        }
+
+        pom.project {//pom配置，此处配置与上一步填写内容一致
+//            name 'picture_library'
+            packaging 'aar'
+            description 'none'
+            //default local storage localtion
+            url 'http://101.200.79.97:8081/repository/maven-releases/'//仓库地址
+            groupId 'com.github.LuckSiege.PictureSelector'
+            artifactId 'picture_library'
+            version 'v2.3.8'
+        }
+    }
+}
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion cfgs.minSdkVersion
+        targetSdkVersion cfgs.targetSdkVersion
+        versionCode cfgs.versionCode
+        versionName cfgs.versionName
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    buildToolsVersion = '29.0.0'
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation project(':ucrop')
+    //noinspection GradleCompatible
+    implementation "androidx.appcompat:appcompat:${cfgs.version_appcompat}"
+    //noinspection GradleCompatible
+    implementation "androidx.recyclerview:recyclerview:${cfgs.version_recyclerview}"
+}
