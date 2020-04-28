@@ -923,7 +923,7 @@ public abstract class PictureBaseActivity extends AppCompatActivity implements H
             case PictureConfig.APPLY_AUDIO_PERMISSIONS_CODE:
                 // 录音权限
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Intent cameraIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+                    Intent  cameraIntent = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
                     if (cameraIntent.resolveActivity(getPackageManager()) != null) {
                         startActivityForResult(cameraIntent, PictureConfig.REQUEST_CAMERA);
                     }

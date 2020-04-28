@@ -200,6 +200,15 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
         if (config.isFallbackVersion2) {
             loadAllMediaData();
         }
+        /**
+         * onEnterAnimationComplete 方法出现于Android 5.0
+         */
+        if (!config.isFallbackVersion2 && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            if (!isFirstEnterActivity) {
+                loadAllMediaData();
+                isFirstEnterActivity = true;
+            }
+        }
         mTvEmpty.setText(config.chooseMode == PictureMimeType.ofAudio() ?
                 getString(R.string.picture_audio_empty)
                 : getString(R.string.picture_empty));
