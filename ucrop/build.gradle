@@ -24,6 +24,9 @@ uploadArchives {//上传配置
             groupId 'com.github.LuckSiege.PictureSelector'
             artifactId 'ucrop'
             version 'v2.3.8'
+
+            //此方法引用时如果为aar文件，需加"@arr"后缀
+            //在terminal中输入gradlew uploadArchives命令上传至nexus
         }
     }
 }
